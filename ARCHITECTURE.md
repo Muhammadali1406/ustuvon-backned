@@ -15,43 +15,43 @@ Stack: Django + DRF, PostgreSQL, Redis, Celery, Docker
 
 ```
 ustuvon-backend/
-├── config/                      
+├── config/                      # Django project config (the "glue")
 │   ├── settings/
 │   │   ├── base.py
 │   │   ├── local.py
 │   │   ├── staging.py
 │   │   └── production.py
-│   ├── urls.py                  
+│   ├── urls.py                  # root URLconf, includes each app's urls
 │   ├── celery.py                # Celery app instance + config
 │   ├── asgi.py
 │   └── wsgi.py
 │
-├── core/                   
-│   ├── models.py                
+├── core/                        # Shared base classes — used by every app
+│   ├── models.py                # BaseModel (id, created_at, updated_at, soft-delete)
 │   ├── serializers.py           # BaseSerializer
-│   ├── viewsets.py              
-│   ├── permissions.py         
-│   ├── exceptions.py          
+│   ├── viewsets.py              # BaseViewSet (pagination, permissions defaults)
+│   ├── permissions.py           # IsOwner, IsAdmin, IsVerified, ...
+│   ├── exceptions.py            # custom exception classes + DRF exception handler
 │   ├── middleware.py            # rate limiting, request logging
 │   └── pagination.py
 │
-├── common/          
+├── common/                      # Cross-cutting utilities (no business logic)
 │   ├── utils.py
 │   ├── validators.py
 │   ├── constants.py
 │   └── enums.py
 │
 ├── apps/
-│   ├── users/                   
+│   ├── users/                   # Abdulaziz — auth, roles, security
 │   ├── subjects/                # Javohir — subjects taxonomy
-│   ├── exams/                  
-│   ├── results/             
-│   ├── statistics/              
-│   ├── certificates/            
-│   ├── notifications/           
-│   ├── payments/                
-│   ├── ai_parser/                
-│   └── admin_panel/             
+│   ├── exams/                   # Javohir — tests, questions, answers (content)
+│   ├── results/                 # Sirojiddin — user_tests, user_answers, results
+│   ├── statistics/              # Sirojiddin — aggregated stats, leaderboard
+│   ├── certificates/            # Davronbek Nazarov — PDF + QR + validation
+│   ├── notifications/           # Davronbek Nazarov — SMS, email, Telegram
+│   ├── payments/                # Sirojiddin (admin side) — to'lovlar
+│   ├── ai_parser/                # Abdulaziz + Davronbek Nazarov — AI test import
+│   └── admin_panel/              # Javohir + Sirojiddin — admin-facing endpoints
 │
 ├── infra/
 │   ├── docker/
@@ -67,7 +67,7 @@ ustuvon-backend/
 │   ├── local.txt
 │   └── production.txt
 │
-├── tests/                      
+├── tests/                       # project-wide integration/e2e tests (per-app unit tests live inside each app)
 ├── .env.example
 ├── manage.py
 └── pytest.ini
@@ -79,7 +79,7 @@ Every domain app repeats this same internal structure — this consistency is th
 
 ```
 apps/results/
-├── models.py            
+├── models.py            # ORM models only: fields, constraints, no logic
 ├── serializers.py        # inherits core.serializers.BaseSerializer
 ├── services.py            # business logic: calculate_score(), enforce_single_device()
 ├── selectors.py            # read-only query helpers (keeps ORM queries out of views/services)
