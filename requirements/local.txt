@@ -1,0 +1,13 @@
+-r base.txt
+
+# Debug toolbar (INSTALLED_APPS + MIDDLEWARE in local.py)
+django-debug-toolbar==7.0.0
+
+# Testing
+pytest==9.1.1
+pytest-django==4.12.0
+factory-boy==3.3.3
+
+# Linting / formatting
+flake8==7.3.0
+black==26.5.1

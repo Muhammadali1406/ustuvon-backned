@@ -1,0 +1,7 @@
+-r base.txt
+
+# WSGI server
+gunicorn==26.0.0
+
+# Error monitoring (SENTRY_DSN block in staging.py)
+sentry-sdk==2.66.0
