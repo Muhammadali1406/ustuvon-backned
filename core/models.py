@@ -16,6 +16,11 @@ class SoftDeleteManager(models.Manager):
         return SoftDeleteQuerySet(self.model, using=self._db).filter(is_deleted=False)
     
 
+class AllObjectsManager(models.Manager):
+    def get_queryset(self):
+        return SoftDeleteQuerySet(self.model, using=self._db)    
+
+
 class BaseModel(models.Model):
     """
     BaseModel for all apps
@@ -27,7 +32,7 @@ class BaseModel(models.Model):
     deleted_at = models.DateTimeField(blank=True, null=True)
 
     objects = SoftDeleteManager() # returns active objects
-    all_objects = models.Manager() # returns all objects
+    all_objects = AllObjectsManager() # returns all objects
 
     class Meta:
         abstract = True
