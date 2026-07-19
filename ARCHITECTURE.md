@@ -15,62 +15,58 @@ Stack: Django + DRF, PostgreSQL, Redis, Celery, Docker
 
 ```
 ustuvon-backend/
-├── config/                      # Django project config (the "glue")
+├── config/                      👤 Abdulaziz
 │   ├── settings/
-│   │   ├── base.py
-│   │   ├── local.py
-│   │   ├── staging.py
-│   │   └── production.py
-│   ├── urls.py                  # root URLconf, includes each app's urls
-│   ├── celery.py                # Celery app instance + config
-│   ├── asgi.py
-│   └── wsgi.py
+│   │   ├── base.py              👤 Abdulaziz
+│   │   ├── local.py             👤 Abdulaziz
+│   │   ├── staging.py           👤 Abdulaziz
+│   │   └── production.py        👤 Abdulaziz
+│   ├── urls.py                  👤 Abdulaziz
+│   ├── celery.py                👤 Abdulaziz  (Davronbek N. can propose changes)
+│   ├── asgi.py                  👤 Abdulaziz
+│   └── wsgi.py                  👤 Abdulaziz
 │
-├── core/                        # Shared base classes — used by every app
-│   ├── models.py                # BaseModel (id, created_at, updated_at, soft-delete)
-│   ├── serializers.py           # BaseSerializer
-│   ├── viewsets.py              # BaseViewSet (pagination, permissions defaults)
-│   ├── permissions.py           # IsOwner, IsAdmin, IsVerified, ...
-│   ├── exceptions.py            # custom exception classes + DRF exception handler
-│   ├── middleware.py            # rate limiting, request logging
-│   └── pagination.py
+├── core/                        👤 Abdulaziz  — foundation, everyone reads, only Abdulaziz merges
+│   ├── models.py                👤 Abdulaziz
+│   ├── serializers.py           👤 Abdulaziz
+│   ├── viewsets.py              👤 Abdulaziz
+│   ├── permissions.py           👤 Abdulaziz
+│   ├── exceptions.py            👤 Abdulaziz
+│   ├── middleware.py            👤 Abdulaziz
+│   └── pagination.py            👤 Abdulaziz
 │
-├── common/                      # Cross-cutting utilities (no business logic)
+├── common/                      👥 Shared — anyone can add a utility, no single owner
 │   ├── utils.py
 │   ├── validators.py
 │   ├── constants.py
 │   └── enums.py
 │
 ├── apps/
-│   ├── users/                   # Abdulaziz — auth, roles, security
-│   ├── subjects/                # Javohir — subjects taxonomy
-│   ├── exams/                   # Javohir — tests, questions, answers (content)
-│   ├── results/                 # Sirojiddin — user_tests, user_answers, results
-│   ├── statistics/              # Sirojiddin — aggregated stats, leaderboard
-│   ├── certificates/            # Davronbek Nazarov — PDF + QR + validation
-│   ├── notifications/           # Davronbek Nazarov — SMS, email, Telegram
-│   ├── payments/                # Sirojiddin (admin side) — to'lovlar
-│   ├── ai_parser/                # Abdulaziz + Davronbek Nazarov — AI test import
-│   └── admin_panel/              # Javohir + Sirojiddin — admin-facing endpoints
+│   ├── users/                   👤 Abdulaziz          — auth, roles, security
+│   ├── subjects/                👤 Javohir             — subjects taxonomy
+│   ├── exams/                   👤 Javohir             — tests, questions, answers
+│   ├── results/                 👤 Sirojiddin          — user_tests, user_answers, results
+│   ├── statistics/              👤 Sirojiddin          — aggregated stats, leaderboard
+│   ├── certificates/            👤 Davronbek Nazarov   — PDF + QR + validation
+│   ├── notifications/           👤 Davronbek Nazarov   — SMS, email, Telegram
+│   ├── payments/                👤 Sirojiddin          — to'lovlar (admin side)
+│   ├── ai_parser/                👥 Abdulaziz + Davronbek Nazarov  — AI test import
+│   └── admin_panel/              👥 Javohir (content) + Sirojiddin (users/payments)
 │
 ├── infra/
-│   ├── docker/
-│   │   ├── Dockerfile
-│   │   ├── docker-compose.yml
-│   │   ├── docker-compose.prod.yml
-│   │   └── entrypoint.sh
-│   └── nginx/
-│       └── default.conf
+│   ├── docker/                  👤 Abdulaziz
+│   └── nginx/                   👤 Abdulaziz
 │
-├── requirements/
+├── requirements/                👤 Abdulaziz  — but everyone must add their own new packages here via PR
 │   ├── base.txt
 │   ├── local.txt
+│   ├── staging.txt
 │   └── production.txt
 │
-├── tests/                       # project-wide integration/e2e tests (per-app unit tests live inside each app)
-├── .env.example
-├── manage.py
-└── pytest.ini
+├── tests/                       👥 Shared — project-wide integration/e2e tests, anyone can add
+├── .env.example                 👤 Abdulaziz
+├── manage.py                    👤 Abdulaziz
+└── pytest.ini                   👤 Abdulaziz
 ```
 
 ## 3. Standard shape of every app (`apps/<name>/`)
