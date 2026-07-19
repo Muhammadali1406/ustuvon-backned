@@ -2,7 +2,7 @@
 Local development settings.
 Run with:  DJANGO_SETTINGS_MODULE=config.settings.local
 """
-from .base import *  # noqa: F401,F403
+from .base import *
 
 
 
