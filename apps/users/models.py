@@ -123,10 +123,10 @@ class VerificationCode(BaseModel):
         if not self.expires_at:
             self.expires_at = timezone.now() + timedelta(minutes=self.DEFAULT_TTL_MINUTES)
         super().save(*args, **kwargs)
+
+
+
     @property
-
-
-
     def is_expired(self) -> bool:
         return timezone.now() > self.expires_at
 
