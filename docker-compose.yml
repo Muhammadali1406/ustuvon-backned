@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: ustuvon_redis
+    ports:
+      - "6379:6379"
+  
+  # Django Web Server
+  web:
+    build: .
+    container_name: ustuvon_web
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    
+  # Celery Worker
+  celery_worker:
+    build: .
+    container_name: ustuvon_celery_worker
+    command: celery -A config worker --loglevel=info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - web
+  
+  # Celery Beat
+  celery_beat:
+    build: .
+    container_name: ustuvon_celery_beat
+    command: celery -A config beat --loglevel=info -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - web
+
+
+

@@ -1,0 +1,21 @@
+# Virtual muhitlar
+.venv/
+myenv/
+env/
+venv/
+
+# Python keshi
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Git va muhit fayllari
+.git/
+.gitignore
+.dockerignore
+
+# Boshqa keraksiz fayllar
+*.log
+.DS_Store
